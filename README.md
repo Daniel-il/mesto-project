@@ -5,4 +5,5 @@
 ## Технологии
 html и css
 
-#### Ссылка на проект
+#### Ссылка на проект:
+https://daniel-il.github.io/mesto-project/
