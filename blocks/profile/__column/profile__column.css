@@ -1,0 +1,6 @@
+.profile__column {
+  display: flex;
+  flex-direction: column;
+  max-width: 366px;
+  width: 100%;
+}

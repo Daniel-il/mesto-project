@@ -1,0 +1,15 @@
+.page {
+  font-family: "Inter", "Arial", sans-serif;
+  background-color: black;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+}
+@media screen and (max-width: 320px) {
+  .page{
+    max-width: 320px;
+  }
+}

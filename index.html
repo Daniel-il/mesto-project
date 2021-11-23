@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./pages/index.css" />
+    <title>Место</title>
+  </head>
+  <body class="page">
+    <header class="header">
+      <img src="./images/logo.svg" alt="логотип" class="logo" />
+    </header>
+    <main class="main">
+      <section class="profile">
+        <img src="./images/avatar.jpg" alt="аватар" class="profile__avatar" />
+        <div class="profile__info">
+          <div class="profile__column">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <p class="profile__description">Исследователь океана</p>
+          </div>
+          <a href="#"
+            ><img
+              src="./images/edit-button.svg"
+              alt="кнопка изменения профиля"
+              class="profile__edit-button"
+          /></a>
+        </div>
+        <a href="#" class="profile__add-button"></a>
+      </section>
+      <section class="popup popup_opened">
+        <div class="popup__overlay"></div>
+        <a href="#"
+          ><img
+            class="popup__close-button"
+            src="./images/close-button.svg"
+            alt="закрывающая кнопка"
+          />
+        </a>
+        <div class="form">
+          <h2 class="form__heading">Редактировать профиль</h2>
+          <fieldset class="form__input-container">
+            <input
+              type="text"
+              name="form-name"
+              placeholder="Жак-Ив Кусто"
+              class="form__item form__item_el_name"
+              required
+            />
+            <div class="form__line"></div>
+            <input
+              type="text"
+              name="form-description"
+              placeholder="Исследователь океана"
+              class="form__item form__item_el_description"
+              required
+            />
+            <div class="form__line"></div>
+            <button type="submit" class="form__submit-button">Сохранить</button>
+          </fieldset>
+        </div>
+      </section>
+      <section class="cards">
+        <ul class="cards__list">
+          <li class="card">
+            <img
+              src="./images/karachaevsk.jpg"
+              alt="Карачаевск"
+              class="card__image"
+            />
+            <div class="card__info">
+              <h2 class="card__heading">Карачаевск</h2>
+              <a href="#">
+                <img
+                  src="./images/like-button.svg"
+                  alt="кнопка лайка"
+                  class="card__like-button"
+                />
+              </a>
+            </div>
+          </li>
+          <li class="card">
+            <img
+              src="./images/elbrus.jpg"
+              alt="Гора Эльбрус"
+              class="card__image"
+            />
+            <div class="card__info">
+              <h2 class="card__heading">Гора Эльбрус</h2>
+              <a href="#">
+                <img
+                  src="./images/like-button.svg"
+                  alt="кнопка лайка"
+                  class="card__like-button"
+                />
+              </a>
+            </div>
+          </li>
+          <li class="card">
+            <img src="./images/dombay.jpg" alt="Домбай" class="card__image" />
+            <div class="card__info">
+              <h2 class="card__heading">Домбай</h2>
+              <a href="#">
+                <img
+                  src="./images/like-button.svg"
+                  alt="кнопка лайка"
+                  class="card__like-button"
+                />
+              </a>
+            </div>
+          </li>
+          <li class="card">
+            <img
+              src="./images/elbrus.jpg"
+              alt="Гора Эльбрус"
+              class="card__image"
+            />
+            <div class="card__info">
+              <h2 class="card__heading">Гора Эльбрус</h2>
+              <a href="#">
+                <img
+                  src="./images/like-button.svg"
+                  alt="кнопка лайка"
+                  class="card__like-button"
+                />
+              </a>
+            </div>
+          </li>
+          <li class="card">
+            <img src="./images/dombay.jpg" alt="Домбай" class="card__image" />
+            <div class="card__info">
+              <h2 class="card__heading">Домбай</h2>
+              <a href="#">
+                <img
+                  src="./images/like-button.svg"
+                  alt="кнопка лайка"
+                  class="card__like-button"
+                />
+              </a>
+            </div>
+          </li>
+          <li class="card">
+            <img
+              src="./images/karachaevsk.jpg"
+              alt="Карачаевск"
+              class="card__image"
+            />
+            <div class="card__info">
+              <h2 class="card__heading">Карачаево-Ч...</h2>
+              <a href="#">
+                <img
+                  src="./images/like-button.svg"
+                  alt="кнопка лайка"
+                  class="card__like-button"
+                />
+              </a>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__copyright">&#169; 2020 Mesto Russia</p>
+    </footer>
+  </body>
+</html>
