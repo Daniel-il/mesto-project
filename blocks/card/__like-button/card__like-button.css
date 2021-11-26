@@ -1,8 +1,15 @@
 .card__like-button {
-  max-width: 19px;
-  width: 100%;
-  padding-top: 5px;
+  width: 22px;
+  height: 19px;
+  background-image: url(../../../images/like-button.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: flex;
+  object-fit: cover;
+  padding: 0;
+  border: none;
+  margin-top: 5px;
 }
 .card__like-button:hover {
-  opacity: .5;
+  opacity: 0.5;
 }

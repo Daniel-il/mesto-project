@@ -1,6 +1,17 @@
 .profile__column {
   display: flex;
-  flex-direction: column;
-  max-width: 366px;
+  max-width: 336px;
   width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+@media screen and (max-width: 768px){
+  .profile__column {
+   margin: 0 auto;
+  }
+}
+@media screen and (max-width: 320px) {
+  .profile__column {
+    justify-content: center;
+  }
 }
