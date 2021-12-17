@@ -23,7 +23,7 @@
           <button type="button" class="profile__add-button"></button>
         </div>
       </section>
-      <section class="popup">
+      <div class="popup">
         <div class="popup__main-container">
           <button type="button" class="popup__close-button"></button>
           <form class="form" name="form">
@@ -33,14 +33,14 @@
                 type="text"
                 name="form-name"
                 placeholder="Имя"
-                class="form__item"
+                class="form__item form__item_el_name"
                 required
               />
               <input
                 type="text"
                 name="form-description"
                 placeholder="Профессия"
-                class="form__item"
+                class="form__item form__item_el_description"
                 required
               />
               <button type="submit" class="form__submit-button">
@@ -49,73 +49,63 @@
             </fieldset>
           </form>
         </div>
-      </section>
+      </div>
+      <div class="popup popup_type_add-card">
+        <div class="popup__main-container">
+          <button
+            type="button"
+            class="popup__close-button popup__close-button_type_add-card"
+          ></button>
+          <form class="form form_type_add-card" name="form">
+            <h2 class="form__heading">Новое место</h2>
+            <fieldset class="form__input-container">
+              <input
+                type="text"
+                name="form-name"
+                placeholder="Название"
+                class="form__item form__item_el_card-name"
+                required
+              />
+              <input
+                type="text"
+                name="form-description"
+                placeholder="Ссылка на картинку"
+                class="form__item form__item_el_link"
+                required
+              />
+              <button
+                type="submit"
+                class="form__submit-button form__submit-button_type_card"
+              >
+                Создать
+              </button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
       <section class="cards">
-        <ul class="cards__list">
-          <li class="card">
-            <img
-              src="./images/karachaevsk.jpg"
-              alt="Карачаевск"
-              class="card__image"
-            />
-            <div class="card__info">
-              <h2 class="card__heading">Карачаевск</h2>
-              <button type="button" class="card__like-button"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img
-              src="./images/elbrus.jpg"
-              alt="Гора Эльбрус"
-              class="card__image"
-            />
-            <div class="card__info">
-              <h2 class="card__heading">Гора Эльбрус</h2>
-              <button type="button" class="card__like-button"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img src="./images/dombay.jpg" alt="Домбай" class="card__image" />
-            <div class="card__info">
-              <h2 class="card__heading">Домбай</h2>
-              <button type="button" class="card__like-button"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img
-              src="./images/elbrus.jpg"
-              alt="Гора Эльбрус"
-              class="card__image"
-            />
-            <div class="card__info">
-              <h2 class="card__heading">Гора Эльбрус</h2>
-              <button type="button" class="card__like-button"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img src="./images/dombay.jpg" alt="Домбай" class="card__image" />
-            <div class="card__info">
-              <h2 class="card__heading">Домбай</h2>
-              <button type="button" class="card__like-button"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img
-              src="./images/karachaevsk.jpg"
-              alt="Карачаевск"
-              class="card__image"
-            />
-            <div class="card__info">
-              <h2 class="card__heading">Карачаево-Черкесия</h2>
-              <button type="button" class="card__like-button"></button>
-            </div>
-          </li>
-        </ul>
+        <ul class="cards__list"></ul>
       </section>
+      <div class="popup popup_type_image">
+        <div class="popup__image-container">
+          <button type="button" class="popup__close-button popup__close-button_type_image"></button>
+          <img src="" alt="" class="popup__image" />
+          <p class="popup__image-description"></p>
+        </div>
+      </div>
     </main>
     <footer class="footer">
       <p class="footer__copyright">&#169; 2020 Mesto Russia</p>
     </footer>
+    <template id="card-adding">
+      <li class="card">
+        <img class="card__image" />
+        <button type="button" class="card__delete-button"></button>
+        <div class="card__info">
+          <h2 class="card__heading"></h2>
+          <button type="button" class="card__like-button"></button>
+        </div></li
+    ></template>
     <script src="./scripts/script.js"></script>
   </body>
 </html>
