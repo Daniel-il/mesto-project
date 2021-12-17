@@ -1,9 +1,9 @@
 const popupProfile = document.querySelector('.popup')
 const editButton = document.querySelector(".profile__edit-button");
-function popupOpener(popup) {
+function openPopup(popup) {
   popup.classList.add("popup_opened");
 }
-editButton.addEventListener("click", () => popupOpener(popupProfile));
+editButton.addEventListener("click", () => openPopup(popupProfile));
 const closeButton = document.querySelector(".popup__close-button");
 function popupCloser(popup) {
   popup.classList.remove("popup_opened");
@@ -15,11 +15,11 @@ const profileName = profile.querySelector(".profile__name");
 const profileDescription = profile.querySelector(".profile__description");
 let nameInput = inputContainer.querySelector(".form__item_el_name");
 let jobInput = inputContainer.querySelector(".form__item_el_description");
-function formItems() {
+function putFormItems() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
 }
-editButton.addEventListener("click", formItems);
+editButton.addEventListener("click", putFormItems);
 formElement = document.querySelector(".form");
 function formSubmitHandler(evt) {
   evt.preventDefault();
@@ -30,12 +30,12 @@ formElement.addEventListener("submit", formSubmitHandler);
 const submitButton = document.querySelector(".form__submit-button");
 submitButton.addEventListener("click",() => popupCloser(popupProfile));
 const addButton = document.querySelector(".profile__add-button");
-const popupAddCard = document.querySelector(".popup_type_add-card");
-addButton.addEventListener('click', () => popupOpener(popupAddCard))
+const popupTypeAddCard = document.querySelector(".popup_type_add-card");
+addButton.addEventListener('click', () => openPopup(popupTypeAddCard))
 const closeButtonTypeAddCard = document.querySelector(
   ".popup__close-button_type_add-card"
 );
-closeButtonTypeAddCard.addEventListener("click", () => popupCloser(popupAddCard))
+closeButtonTypeAddCard.addEventListener("click", () => popupCloser(popupTypeAddCard))
 const initialCards = [
   {
     name: "Архыз",
@@ -90,7 +90,7 @@ function addCard(el) {
     popupImageDescription.textContent = cardHeading.textContent;
   };
   cardImg.addEventListener('click', openPopupImage)
-  cardImg.addEventListener('click', () => popupOpener(popupTypeImage))
+  cardImg.addEventListener('click', () => openPopup(popupTypeImage))
   const popupImageCloseButton = document.querySelector('.popup__close-button_type_image')
   popupImageCloseButton.addEventListener('click', () => popupCloser(popupTypeImage))
   return cardElement;
@@ -107,7 +107,7 @@ function formAddCardSubmitHandler(event) {
   card.link = placeLinkInput.value;
   cardsList.prepend(addCard(card));
 }
-const formElementAddCard = document.querySelector(".form_type_add-card");
-formElementAddCard.addEventListener("submit", formAddCardSubmitHandler)
+const formElementTypeAddCard = document.querySelector(".form_type_add-card");
+formElementTypeAddCard.addEventListener("submit", formAddCardSubmitHandler)
 const addCardSubmitButton = document.querySelector('.form__submit-button_type_card')
 addCardSubmitButton.addEventListener('click', () => popupCloser(popupAddCard))
