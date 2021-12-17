@@ -5,10 +5,10 @@ function openPopup(popup) {
 }
 editButton.addEventListener("click", () => openPopup(popupProfile));
 const closeButton = document.querySelector(".popup__close-button");
-function popupCloser(popup) {
+function closePopup(popup) {
   popup.classList.remove("popup_opened");
 }
-closeButton.addEventListener("click", () => popupCloser(popupProfile));
+closeButton.addEventListener("click", () => closePopup(popupProfile));
 const profile = document.querySelector(".profile__column");
 const inputContainer = document.querySelector(".form__input-container");
 const profileName = profile.querySelector(".profile__name");
@@ -28,14 +28,14 @@ function formSubmitHandler(evt) {
 }
 formElement.addEventListener("submit", formSubmitHandler);
 const submitButton = document.querySelector(".form__submit-button");
-submitButton.addEventListener("click",() => popupCloser(popupProfile));
+submitButton.addEventListener("click",() => closePopup(popupProfile));
 const addButton = document.querySelector(".profile__add-button");
 const popupTypeAddCard = document.querySelector(".popup_type_add-card");
 addButton.addEventListener('click', () => openPopup(popupTypeAddCard))
 const closeButtonTypeAddCard = document.querySelector(
   ".popup__close-button_type_add-card"
 );
-closeButtonTypeAddCard.addEventListener("click", () => popupCloser(popupTypeAddCard))
+closeButtonTypeAddCard.addEventListener("click", () => closePopup(popupTypeAddCard))
 const initialCards = [
   {
     name: "Архыз",
@@ -92,7 +92,7 @@ function addCard(el) {
   cardImg.addEventListener('click', openPopupImage)
   cardImg.addEventListener('click', () => openPopup(popupTypeImage))
   const popupImageCloseButton = document.querySelector('.popup__close-button_type_image')
-  popupImageCloseButton.addEventListener('click', () => popupCloser(popupTypeImage))
+  popupImageCloseButton.addEventListener('click', () => closePopup(popupTypeImage))
   return cardElement;
 }
 initialCards.forEach((el) => {
@@ -110,4 +110,4 @@ function formAddCardSubmitHandler(event) {
 const formElementTypeAddCard = document.querySelector(".form_type_add-card");
 formElementTypeAddCard.addEventListener("submit", formAddCardSubmitHandler)
 const addCardSubmitButton = document.querySelector('.form__submit-button_type_card')
-addCardSubmitButton.addEventListener('click', () => popupCloser(popupAddCard))
+addCardSubmitButton.addEventListener('click', () => closePopup(popupTypeAddCard))
