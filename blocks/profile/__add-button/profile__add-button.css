@@ -1,7 +1,7 @@
 .profile__add-button {
   width: 150px;
   margin: 15px 0 0;
-  background-image: url(../../../images/add-button.svg);
+  background-image: url(../../../src/images/add-button.svg);
   background-repeat: no-repeat;
   height: 50px;
   background-color: black;
@@ -24,6 +24,6 @@
     margin: 36px 0;
     width: 282px;
     min-height: 50px;
-    background-image: url(../../../images/add-button_xs.svg);
+    background-image: url(../../../src/images/add-button_xs.svg);
   }
 }

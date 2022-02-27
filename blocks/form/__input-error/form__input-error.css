@@ -1,0 +1,13 @@
+.form__input-error {
+  display: none;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  color: #FF0000;
+  position: absolute;
+  top: 35px;
+  left: 36px;
+}
+.form__input-error:nth-of-type(2) {
+  top: 95px;
+}

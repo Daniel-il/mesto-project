@@ -4,16 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./pages/index.css" />
     <title>Место</title>
   </head>
   <body class="page">
     <header class="header">
-      <img src="./images/logo.svg" alt="логотип" class="logo" />
+      <img src="<%=require('./images/logo.svg')%>" alt="логотип" class="logo" />
     </header>
     <main class="main">
       <section class="profile">
-        <img src="./images/avatar.jpg" alt="аватар" class="profile__avatar" />
+        <img src="<%=require('./images/avatar.jpg')%>" alt="аватар" class="profile__avatar" />
         <div class="profile__info">
           <div class="profile__column">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -26,7 +25,7 @@
       <div class="popup popup_type_profile">
         <div class="popup__main-container">
           <button type="button" class="popup__close-button"></button>
-          <form class="form" name="form">
+          <form class="form" name="form" novalidate>
             <h2 class="form__heading">Редактировать профиль</h2>
             <fieldset class="form__input-container">
               <input
@@ -34,15 +33,21 @@
                 name="form-name"
                 placeholder="Имя"
                 class="form__item form__item_el_name"
+                id="name-input"
+                minlength="2"
+                maxlength="40"
                 required
               />
+              <span class="form__input-error name-input-error"></span>
               <input
                 type="text"
                 name="form-description"
                 placeholder="Профессия"
                 class="form__item form__item_el_description"
+                id="description-input"
                 required
               />
+              <span class="form__input-error description-input-error"></span>
               <button type="submit" class="form__submit-button">
                 Сохранить
               </button>
@@ -64,15 +69,21 @@
                 name="form-name"
                 placeholder="Название"
                 class="form__item form__item_el_card-name"
+                id="card-name-input"
+                minlength="2"
+                maxlength="30"
                 required
               />
+              <span class="form__input-error card-name-input-error"></span>
               <input
-                type="text"
+                type="url"
                 name="form-description"
                 placeholder="Ссылка на картинку"
                 class="form__item form__item_el_link"
+                id="card-link-input"
                 required
               />
+              <span class="form__input-error card-link-input-error"></span>
               <button
                 type="submit"
                 class="form__submit-button form__submit-button_type_card"
@@ -109,6 +120,5 @@
           <button type="button" class="card__like-button"></button>
         </div></li
     ></template>
-    <script src="./scripts/index.js"></script>
   </body>
 </html>
