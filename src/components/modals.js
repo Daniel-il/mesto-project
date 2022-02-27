@@ -9,14 +9,14 @@ const formElement = document.querySelector(".form");
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
-  document.addEventListener("keydown", keyHandler)
+  document.addEventListener("keydown", handleEscKey)
 }
 
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
-  document.removeEventListener("keydown", keyHandler)
+  document.removeEventListener("keydown", handleEscKey)
 }
-function putFormItems() {
+function setProfileValues() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
 }
@@ -26,11 +26,10 @@ function submitFormProfile(evt) {
   profileDescription.textContent = jobInput.value;
   closePopup(popupProfile);
 }
-function keyHandler(evt) {
-  if (evt.key === "Escape") {
-    closePopup(popupProfile);
-    closePopup(popupTypeAddCard);
-    closePopup(popupTypeImage);
+function handleEscKey(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened')
+    closePopup(openedPopup)
   }
 }
-export { closePopup, openPopup, popupTypeAddCard, formElement, submitFormProfile, putFormItems};
+export { closePopup, openPopup, popupTypeAddCard, formElement, submitFormProfile, setProfileValues};

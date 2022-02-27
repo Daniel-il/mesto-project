@@ -1,5 +1,5 @@
 import { closePopup, openPopup } from "./modals";
-import { popupTypeAddCard, popupTypeImage } from "./constants.js";
+import { addCardSubmitButton, popupTypeAddCard, popupTypeImage } from "./constants.js";
 const popupImage = document.querySelector(".popup__image");
 const placeNameInput = document.querySelector(".form__item_el_card-name");
 const placeLinkInput = document.querySelector(".form__item_el_link");
@@ -70,10 +70,7 @@ export function submitFormAddCard(event) {
   card.link = placeLinkInput.value;
   cardsList.prepend(addCard(card));
   closePopup(popupTypeAddCard);
+  addCardSubmitButton.classList.add('form__submit-button_inactive')
+  addCardSubmitButton.disabled = true;
   event.target.reset();
-}
-function keyHandler(evt) {
-  if (evt.key === "Enter") {
-    submitFormAddCard
-  }
 }

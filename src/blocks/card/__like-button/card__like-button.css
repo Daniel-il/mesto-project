@@ -1,7 +1,7 @@
 .card__like-button {
   min-width: 22px;
   min-height: 19px;
-  background-image: url(../../../src/images/like-button.svg);
+  background-image: url(../../../images/like-button.svg);
   background-repeat: no-repeat;
   background-size: contain;
   display: flex;

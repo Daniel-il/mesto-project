@@ -2,41 +2,29 @@ import "../pages/index.css";
 import {
   formElementTypeAddCard,
   popupTypeAddCard,
-  popupTypeImage,
   popupProfile,
   addButton,
-  closeButtonTypeAddCard,
-  popupImageCloseButton,
   editButton,
-  closeButton
 } from "./constants.js";
 import { submitFormAddCard } from "./cards";
-import { closePopup, openPopup, formElement, submitFormProfile, putFormItems} from "./modals";
-import { enableValidation } from "./validate";
+import { closePopup, openPopup, formElement, submitFormProfile, setProfileValues} from "./modals";
+import { enableValidation, validationSettings} from "./validate";
 formElement.addEventListener("submit", submitFormProfile);
 addButton.addEventListener("click", () => openPopup(popupTypeAddCard));
-closeButtonTypeAddCard.addEventListener("click", () =>
-  closePopup(popupTypeAddCard)
-);
-
-popupImageCloseButton.addEventListener("click", () =>
-  closePopup(popupTypeImage)
-);
 editButton.addEventListener("click", () => {
   openPopup(popupProfile);
-  putFormItems();
+  setProfileValues();
 });
 formElementTypeAddCard.addEventListener("submit", submitFormAddCard);
-document.addEventListener("mousedown", (e) => {
-  if (
-    e.target == popupProfile ||
-    e.target == popupTypeAddCard ||
-    e.target == popupTypeImage
-  ) {
-    closePopup(popupProfile);
-    closePopup(popupTypeAddCard);
-    closePopup(popupTypeImage);
-  }
-});
-closeButton.addEventListener("click", () => closePopup(popupProfile));
-enableValidation();
+const popups = document.querySelectorAll('.popup')
+popups.forEach((popup) => {
+    popup.addEventListener('mousedown', (evt) => {
+        if (evt.target.classList.contains('popup_opened')) {
+            closePopup(popup)
+        }
+        if (evt.target.classList.contains('popup__close-button')) {
+          closePopup(popup)
+        }
+    })
+})
+enableValidation(validationSettings)
