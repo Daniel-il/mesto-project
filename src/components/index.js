@@ -7,9 +7,9 @@ import {
   editButton,
 } from "./constants.js";
 import { submitFormAddCard } from "./cards";
-import { closePopup, openPopup, formElement, submitFormProfile, setProfileValues} from "./modals";
+import { closePopup, openPopup, profileForm, submitFormProfile, setProfileValues} from "./modals";
 import { enableValidation, validationSettings} from "./validate";
-formElement.addEventListener("submit", submitFormProfile);
+profileForm.addEventListener("submit", submitFormProfile);
 addButton.addEventListener("click", () => openPopup(popupTypeAddCard));
 editButton.addEventListener("click", () => {
   openPopup(popupProfile);

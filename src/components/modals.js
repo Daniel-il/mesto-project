@@ -5,7 +5,7 @@ const profileName = profile.querySelector(".profile__name");
 const profileDescription = profile.querySelector(".profile__description");
 const nameInput = inputContainer.querySelector(".form__item_el_name");
 const jobInput = inputContainer.querySelector(".form__item_el_description");
-const formElement = document.querySelector(".form");
+const profileForm = document.querySelector(".form_type_profile");
 
 function openPopup(popup) {
   popup.classList.add("popup_opened");
@@ -32,4 +32,4 @@ function handleEscKey(evt) {
     closePopup(openedPopup)
   }
 }
-export { closePopup, openPopup, popupTypeAddCard, formElement, submitFormProfile, setProfileValues};
+export { closePopup, openPopup, popupTypeAddCard, profileForm, submitFormProfile, setProfileValues};
