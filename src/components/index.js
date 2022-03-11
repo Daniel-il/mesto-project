@@ -5,16 +5,21 @@ import {
   popupProfile,
   addButton,
   editButton,
+  changeButton,
+  popupTypeAvatar
 } from "./constants.js";
 import { submitFormAddCard } from "./cards";
-import { closePopup, openPopup, profileForm, submitFormProfile, setProfileValues} from "./modals";
+import { closePopup, openPopup, profileForm, submitFormProfile, setProfileValues, submitAvatarLink, avatarForm} from "./modals";
 import { enableValidation, validationSettings} from "./validate";
+import {getUserData, getCards} from './api.js';
+avatarForm.addEventListener("submit", submitAvatarLink)
 profileForm.addEventListener("submit", submitFormProfile);
 addButton.addEventListener("click", () => openPopup(popupTypeAddCard));
 editButton.addEventListener("click", () => {
   openPopup(popupProfile);
   setProfileValues();
 });
+changeButton.addEventListener('click', () => openPopup(popupTypeAvatar) )
 formElementTypeAddCard.addEventListener("submit", submitFormAddCard);
 const popups = document.querySelectorAll('.popup')
 popups.forEach((popup) => {
@@ -28,3 +33,5 @@ popups.forEach((popup) => {
     })
 })
 enableValidation(validationSettings)
+getUserData()
+getCards()

@@ -10,6 +10,7 @@
  top: 20px;
  right: 20px;
  cursor: pointer;
+ display: none;
 }
 .card__delete-button:hover {
   opacity: .6;

@@ -1,0 +1,9 @@
+.profile__change-avatar {
+    display: none;
+    align-items: center;
+    background: rgba(0, 0, 0, .8);
+    min-width: 120px;
+    min-height: 120px;
+    position: absolute;
+    top: 0;
+}

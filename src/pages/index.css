@@ -40,3 +40,9 @@
 @import url(../blocks/popup/__image-container/popup__image-container.css);
 @import url(../blocks/popup/__image/popup__image.css);
 @import url(../blocks/popup/__image-description/popup__image-description.css);
+@import url(../blocks/card/__likes/card__likes.css);
+@import url(../blocks/card/__likes-count/card__likes-count.css);
+@import url(../blocks/card/__delete-button/_enable/card__delete-button_enable.css);
+@import url(../blocks/profile/__avatar-overlay/profile__avatar-overlay.css);
+@import url(../blocks/profile/__change-avatar/profile__change-avatar.css);
+@import url(../blocks/profile/__change-button/profile__change-button.css);

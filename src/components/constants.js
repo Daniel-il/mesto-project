@@ -8,4 +8,7 @@ const editButton = document.querySelector(".profile__edit-button");
 const addCardSubmitButton = document.querySelector(
   ".form__submit-button_type_card"
 );
-export {popupTypeAddCard, popupTypeImage, popupProfile, formElementTypeAddCard, submitButton, addButton, addCardSubmitButton, editButton}
+const changeButton = document.querySelector('.profile__avatar-overlay')
+const popupTypeAvatar = document.querySelector('.popup_type_avatar')
+const profileImage = document.querySelector('.profile__avatar')
+export {popupTypeAddCard, popupTypeImage, popupProfile, formElementTypeAddCard, submitButton, addButton, addCardSubmitButton, editButton, profileImage, changeButton, popupTypeAvatar}

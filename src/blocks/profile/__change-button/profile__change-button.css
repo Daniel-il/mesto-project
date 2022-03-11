@@ -1,0 +1,7 @@
+.profile__change-button {
+    max-width: 26px;
+    height: 26px;
+    display: flex;
+    margin: 0 auto;
+    justify-items: center;
+}
