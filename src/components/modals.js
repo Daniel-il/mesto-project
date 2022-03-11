@@ -2,7 +2,7 @@ import {
   popupTypeAddCard,
   popupProfile,
   profileImage,
-  popupTypeAvatar
+  popupTypeAvatar,
 } from "./constants.js";
 import { changeUserData, changeAvatar, renderLoading } from "./api.js";
 const profile = document.querySelector(".profile__column");
@@ -16,7 +16,7 @@ export const nameInput = inputContainer.querySelector(".form__item_el_name");
 export const jobInput = inputContainer.querySelector(
   ".form__item_el_description"
 );
-const cardForm = document.querySelector('.form_type_add-card')
+const cardForm = document.querySelector(".form_type_add-card");
 const profileForm = document.querySelector(".form_type_profile");
 const avatarForm = document.querySelector(".form_type_avatar");
 
@@ -34,16 +34,21 @@ function setProfileValues() {
   jobInput.value = profileDescription.textContent;
 }
 function submitAvatarLink(evt) {
+  renderLoading(true, avatarForm, "Обновить");
   evt.preventDefault();
   profileImage.src = avatarInput.value;
   changeAvatar({
-    link: profileImage.src
-  });
+    link: profileImage.src,
+  })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      renderLoading(false, avatarForm, "Обновить");
+    });
   evt.target.reset();
-  closePopup(popupTypeAvatar)
+  closePopup(popupTypeAvatar);
 }
 function submitFormProfile(evt) {
-  renderLoading(true, profileForm, 'Сохранить')
+  renderLoading(true, profileForm, "Сохранить");
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileDescription.textContent = jobInput.value;
@@ -51,6 +56,11 @@ function submitFormProfile(evt) {
     name: profileName.textContent,
     about: profileDescription.textContent,
   })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      renderLoading(false, profileForm, "Сохранить");
+    });
+
   closePopup(popupProfile);
 }
 function handleEscKey(evt) {
@@ -68,5 +78,5 @@ export {
   setProfileValues,
   submitAvatarLink,
   avatarForm,
-  cardForm
+  cardForm,
 };
