@@ -1,6 +1,7 @@
 .profile__avatar-overlay{
   cursor: pointer;
   position: relative;
+  display: flex;
 }
 .profile__avatar-overlay:hover  .profile__change-avatar {
     display: flex;
