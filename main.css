@@ -43,7 +43,7 @@ html{-webkit-text-size-adjust:100%;line-height:1.15}body{margin:0}main{display:b
 .card__likes{display:flex;flex-direction:column}
 .card__likes-count{font-family:Inter;font-size:13px;font-style:normal;font-weight:400;line-height:16px;margin:3px 0 0;text-align:center}
 .card__delete-button_enable{display:flex}
-.profile__avatar-overlay{cursor:pointer;position:relative}.profile__avatar-overlay:hover .profile__change-avatar{display:flex}
+.profile__avatar-overlay{cursor:pointer;display:flex;position:relative}.profile__avatar-overlay:hover .profile__change-avatar{display:flex}
 .profile__change-avatar{align-items:center;background:rgba(0,0,0,.8);display:none;min-height:120px;min-width:120px;position:absolute;top:0}
 .profile__change-button{display:flex;height:26px;justify-items:center;margin:0 auto;max-width:26px}
 
