@@ -23,8 +23,11 @@ export function addCard(el, user) {
     deleteButton.classList.add("card__delete-button_enable");
   }
   function deleteCard() {
-    deleteButton.closest(".card").remove();
-    deleteCardFromServer(el._id);
+    deleteCardFromServer(el._id)
+    .then(() => {
+      deleteButton.closest(".card").remove();
+    })
+    .catch((err) => console.log(err))
   }
   const likeButton = cardElement.querySelector(".card__like-button");
   const cardLikeCount = cardElement.querySelector(".card__likes-count");
