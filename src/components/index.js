@@ -1,6 +1,5 @@
 import "../pages/index.css";
 import {
-  formElementTypeAddCard,
   popupTypeAddCard,
   popupProfile,
   addButton,
@@ -20,9 +19,11 @@ import {
   avatarForm,
   profileDescription,
   profileName,
+  cardForm,
 } from "./modals";
 import { enableValidation, validationSettings } from "./validate";
 import { getUserData, getCards } from "./api.js";
+let userId;
 avatarForm.addEventListener("submit", submitAvatarLink);
 profileForm.addEventListener("submit", submitFormProfile);
 addButton.addEventListener("click", () => openPopup(popupTypeAddCard));
@@ -31,7 +32,7 @@ editButton.addEventListener("click", () => {
   setProfileValues();
 });
 changeButton.addEventListener("click", () => openPopup(popupTypeAvatar));
-formElementTypeAddCard.addEventListener("submit", submitFormAddCard);
+cardForm.addEventListener("submit", submitFormAddCard);
 const popups = document.querySelectorAll(".popup");
 popups.forEach((popup) => {
   popup.addEventListener("mousedown", (evt) => {
@@ -44,18 +45,14 @@ popups.forEach((popup) => {
   });
 });
 enableValidation(validationSettings);
-getUserData()
-  .then((data) => {
-    profileName.textContent = data.name,
-    profileDescription.textContent = data.about;
-    profileImage.src = data.avatar;
-  })
-  .catch((err) => console.log(err));
-getCards()
-  .then((data) => {
-    const cards = Array.from(data);
+Promise.all([getUserData(), getCards()])
+  .then(([userData, cards]) => {
+    (profileName.textContent = userData.name),
+      (profileDescription.textContent = userData.about);
+    profileImage.src = userData.avatar;
+    userId = userData._id;
     cards.forEach((card) => {
-      cardsList.append(addCard(card));
+      cardsList.append(addCard(card, userId));
     });
   })
   .catch((err) => console.log(err));
