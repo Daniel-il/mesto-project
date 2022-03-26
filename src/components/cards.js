@@ -1,13 +1,13 @@
 import { openPopup, cardForm, popupTypeAddCard } from "./modals";
-import { popupTypeImage, addCardSubmitButton } from "./constants.js";
-import { sendCard, deleteCardFromServer, deleteLike, putLike } from "./api";
-import { renderLoading, closePopup } from "./utils";
+import { popupTypeImage, addCardSubmitButton, apiConfig } from "./constants.js";
+import Api from "./api.js";
+import { renderLoading, closePopup } from "./utils.js";
+
+const api = new Api(apiConfig);
 const popupImage = document.querySelector(".popup__image");
 const placeNameInput = document.querySelector(".form__item_el_card-name");
 const placeLinkInput = document.querySelector(".form__item_el_link");
-const popupImageDescription = document.querySelector(
-  ".popup__image-description"
-);
+const popupImageDescription = document.querySelector(".popup__image-description");
 export const cardsList = document.querySelector(".cards__list");
 export function addCard(el, user) {
   const cardTemplate = document.querySelector("#card-adding").content;
@@ -23,11 +23,12 @@ export function addCard(el, user) {
     deleteButton.classList.add("card__delete-button_enable");
   }
   function deleteCard() {
-    deleteCardFromServer(el._id)
-    .then(() => {
-      deleteButton.closest(".card").remove();
-    })
-    .catch((err) => console.log(err))
+    api
+      .deleteCardFromServer(el._id)
+      .then(() => {
+        deleteButton.closest(".card").remove();
+      })
+      .catch((err) => console.log(err));
   }
   const likeButton = cardElement.querySelector(".card__like-button");
   const cardLikeCount = cardElement.querySelector(".card__likes-count");
@@ -38,7 +39,8 @@ export function addCard(el, user) {
   }
   function likeCard() {
     if (likeButton.classList.contains("card__like-button_active")) {
-      deleteLike(el._id)
+      api
+        .deleteLike(el._id)
         .then((el) => {
           const likes = el.likes;
           cardLikeCount.textContent = likes.length;
@@ -46,7 +48,8 @@ export function addCard(el, user) {
         })
         .catch((err) => console.log(err));
     } else {
-      putLike(el._id)
+      api
+        .putLike(el._id)
         .then((el) => {
           const likes = el.likes;
           cardLikeCount.textContent = likes.length;
@@ -69,7 +72,8 @@ export function addCard(el, user) {
 export function submitFormAddCard(event) {
   renderLoading(true, cardForm, "Создание...");
   event.preventDefault();
-  sendCard(placeNameInput.value, placeLinkInput.value)
+  api
+    .sendCard(placeNameInput.value, placeLinkInput.value)
     .then((res) => {
       cardsList.prepend(addCard(res, res.owner._id));
       closePopup(popupTypeAddCard);

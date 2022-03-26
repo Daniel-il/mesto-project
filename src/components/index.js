@@ -7,6 +7,7 @@ import {
   changeButton,
   popupTypeAvatar,
   profileImage,
+  apiConfig
 } from "./constants.js";
 import { submitFormAddCard, cardsList, addCard } from "./cards";
 import {
@@ -22,7 +23,9 @@ import {
   cardForm,
 } from "./modals";
 import { enableValidation, validationSettings } from "./validate";
-import { getUserData, getCards } from "./api.js";
+import Api from "./api.js";
+
+const api = new Api(apiConfig);
 let userId;
 avatarForm.addEventListener("submit", submitAvatarLink);
 profileForm.addEventListener("submit", submitFormProfile);
@@ -45,7 +48,7 @@ popups.forEach((popup) => {
   });
 });
 enableValidation(validationSettings);
-Promise.all([getUserData(), getCards()])
+Promise.all([api.getUserData(), api.getCards()])
   .then(([userData, cards]) => {
     (profileName.textContent = userData.name),
       (profileDescription.textContent = userData.about);

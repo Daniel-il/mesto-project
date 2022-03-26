@@ -22,3 +22,11 @@ export {
   changeButton,
   popupTypeAvatar,
 };
+
+export const apiConfig = {
+  baseUrl: "https://nomoreparties.co/v1/plus-cohort7",
+  headers: {
+    authorization: "5b7f82d3-27ce-4c91-a980-7124a27c0a62",
+    "Content-Type": "application/json",
+  },
+};
