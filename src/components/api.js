@@ -1,75 +1,84 @@
-const config = {
-  baseUrl: "https://nomoreparties.co/v1/plus-cohort7",
-  headers: {
-    authorization: "5b7f82d3-27ce-4c91-a980-7124a27c0a62",
-    "Content-Type": "application/json",
-  },
-};
-function checkResponse(res) {
-  if (res.ok) {
-    return res.json();
+export default class Api {
+  constructor({ baseUrl, headers }) {
+    this._baseUrl = baseUrl;
+    this._headers = headers;
   }
-  return Promise.reject(`Ошибка ${res.status}`);
-}
-export function getUserData() {
-  return fetch(`${config.baseUrl}/users/me`, {
-    headers: config.headers,
-  }).then(checkResponse);
-}
-export function getCards() {
-  return fetch(`${config.baseUrl}/cards`, {
-    headers: config.headers,
-  }).then(checkResponse);
-}
-export function changeUserData(newData) {
-  return fetch(`${config.baseUrl}/users/me`, {
-    method: "PATCH",
-    headers: config.headers,
-    body: JSON.stringify({
-      name: newData.name,
-      about: newData.about,
-    }),
-  }).then(checkResponse);
-}
-export function sendCard(name, link) {
-  return fetch(`${config.baseUrl}/cards`, {
-    method: "POST",
-    headers: config.headers,
-    body: JSON.stringify({
-      name: name,
-      link: link,
-    }),
-  }).then(checkResponse);
-}
-export function getUserId() {
-  return fetch(`${config.baseUrl}/users/me`, {
-    headers: config.headers,
-  }).then(checkResponse);
-}
-export function deleteCardFromServer(id) {
-  return fetch(`${config.baseUrl}/cards/${id}`, {
-    method: "DELETE",
-    headers: config.headers,
-  }).then(checkResponse);
-}
-export function putLike(id) {
-  return fetch(`${config.baseUrl}/cards/likes/${id}`, {
-    method: "PUT",
-    headers: config.headers,
-  }).then(checkResponse);
-}
-export function deleteLike(id) {
-  return fetch(`${config.baseUrl}/cards/likes/${id}`, {
-    method: "DELETE",
-    headers: config.headers,
-  }).then(checkResponse);
-}
-export function changeAvatar(newAvatar) {
-  return fetch(`${config.baseUrl}/users/me/avatar`, {
-    method: "PATCH",
-    headers: config.headers,
-    body: JSON.stringify({
-      avatar: newAvatar.link,
-    }),
-  }).then(checkResponse);
+
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
+  }
+
+  getUserData() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+    }).then(this._checkResponse);
+  }
+
+  getCards() {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
+    }).then(this._checkResponse);
+  }
+
+  changeUserData(newData) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: newData.name,
+        about: newData.about,
+      }),
+    }).then(this._checkResponse);
+  }
+
+  sendCard(name, link) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        link: link,
+      }),
+    }).then(this._checkResponse);
+  }
+
+  getUserId() {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+    }).then(this._checkResponse);
+  }
+
+  deleteCardFromServer(id) {
+    return fetch(`${this._baseUrl}/cards/${id}`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then(this._checkResponse);
+  }
+
+  putLike(id) {
+    return fetch(`${this._baseUrl}/cards/likes/${id}`, {
+      method: "PUT",
+      headers: this._headers,
+    }).then(this._checkResponse);
+  }
+
+  deleteLike(id) {
+    return fetch(`${this._baseUrl}/cards/likes/${id}`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then(this._checkResponse);
+  }
+
+  changeAvatar(newAvatar) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: newAvatar.link,
+      }),
+    }).then(this._checkResponse);
+  }
 }

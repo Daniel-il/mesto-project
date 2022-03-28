@@ -3,9 +3,13 @@ import {
   popupProfile,
   profileImage,
   popupTypeAvatar,
+  apiConfig
 } from "./constants.js";
-import { changeUserData, changeAvatar } from "./api.js";
+import Api from "./api.js";
 import { renderLoading, openPopup, closePopup } from "./utils.js";
+
+const api = new Api(apiConfig);
+
 const profile = document.querySelector(".profile__column");
 const inputContainer = document.querySelector(".form__input-container");
 export const profileName = profile.querySelector(".profile__name");
@@ -28,14 +32,14 @@ function setProfileValues() {
 function submitAvatarLink(evt) {
   renderLoading(true, avatarForm, "Обновление...");
   evt.preventDefault();
-  changeAvatar({
+  api.changeAvatar({
     link: avatarInput.value,
   })
     .then(() => {
       profileImage.src = avatarInput.value;
       evt.target.reset();
       closePopup(popupTypeAvatar);
-      avatarSubmitButton.disabled = true 
+      avatarSubmitButton.disabled = true
       avatarSubmitButton.classList.add('form__submit-button_inactive')
     })
     .catch((err) => console.log(err))
@@ -46,7 +50,7 @@ function submitAvatarLink(evt) {
 function submitFormProfile(evt) {
   renderLoading(true, profileForm, "Сохранeние...");
   evt.preventDefault();
-  changeUserData({
+  api.changeUserData({
     name: profileName.textContent,
     about: profileDescription.textContent,
   })
