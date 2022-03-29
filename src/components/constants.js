@@ -10,6 +10,9 @@ const addCardSubmitButton = document.querySelector(
 const changeButton = document.querySelector(".profile__avatar-overlay");
 const popupTypeAvatar = document.querySelector(".popup_type_avatar");
 const profileImage = document.querySelector(".profile__avatar");
+const likeButton = document.querySelector('.card__like-button')
+const cardsListSelector = document.querySelector(".cards__list");
+const cardSelector = '#card-adding';
 export {
   popupTypeAddCard,
   popupTypeImage,
@@ -21,6 +24,9 @@ export {
   profileImage,
   changeButton,
   popupTypeAvatar,
+  cardSelector,
+  likeButton,
+  cardsListSelector
 };
 
 export const apiConfig = {
