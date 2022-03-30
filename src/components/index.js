@@ -1,21 +1,20 @@
 import "../pages/index.css";
 import {
-  popupTypeAddCard,
-  popupProfile,
+  popupTypeAddCardSelector,
+  popupTypeProfileSelector,
   addButton,
   editButton,
   changeButton,
-  popupTypeAvatar,
+  popupTypeAvatarSelector,
   profileImage,
   apiConfig,
   cardsListSelector,
   cardSelector,
   validationSettings,
-} from "./constants.js";
+  popupTypeImageSelector
+} from "./constants";
 import { submitFormAddCard } from "./card";
 import {
-  closePopup,
-  openPopup,
   profileForm,
   submitFormProfile,
   setProfileValues,
@@ -25,33 +24,29 @@ import {
   profileName,
   cardForm,
 } from "./modals";
-import Api from "./api.js";
+import Api from "./api";
 import Card from "./card";
 import Section from "./section";
 import FormValidator from "./validate";
+import Popup from "./Popup";
 
 const api = new Api(apiConfig);
+const popupTypeAddCard = new Popup(popupTypeAddCardSelector);
+const popupTypeProfile = new Popup(popupTypeProfileSelector);
+const popupTypeAvatar = new Popup(popupTypeAvatarSelector);
+const popupTypeImage= new Popup(popupTypeImageSelector);
+
 let userId;
 avatarForm.addEventListener("submit", submitAvatarLink);
 profileForm.addEventListener("submit", submitFormProfile);
-addButton.addEventListener("click", () => openPopup(popupTypeAddCard));
+addButton.addEventListener("click", () => popupTypeAddCard.open());
 editButton.addEventListener("click", () => {
-  openPopup(popupProfile);
+  popupTypeProfile.open();
   setProfileValues();
 });
-changeButton.addEventListener("click", () => openPopup(popupTypeAvatar));
+changeButton.addEventListener("click", () => popupTypeAvatar.open());
 cardForm.addEventListener("submit", submitFormAddCard);
-const popups = document.querySelectorAll(".popup");
-popups.forEach((popup) => {
-  popup.addEventListener("mousedown", (evt) => {
-    if (evt.target.classList.contains("popup_opened")) {
-      closePopup(popup);
-    }
-    if (evt.target.classList.contains("popup__close-button")) {
-      closePopup(popup);
-    }
-  });
-});
+
 const formList = Array.from(document.querySelectorAll(".form"));
 formList.forEach((formElement) => {
   const formValidator = new FormValidator(validationSettings, formElement);
@@ -64,7 +59,9 @@ Promise.all([api.getUserData(), api.getCards()])
     profileImage.src = userData.avatar;
     userId = userData._id;
     const cardsList = new Section({items: api.getCards(), renderer: (item) => {
-      const card = new Card({name: item.name, link: item.link, _id : item._id, likes: item.likes, owner: item.owner._id}, userId, cardSelector);
+      const card = new Card({name: item.name, link: item.link, _id : item._id, likes: item.likes, owner: item.owner._id}, userId, cardSelector, () => {
+        popupTypeImage.open();
+      });
       const cardElement = card.generate();
       cardsList.addItem(cardElement)
     }}, cardsListSelector)

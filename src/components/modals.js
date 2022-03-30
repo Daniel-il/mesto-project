@@ -1,12 +1,9 @@
 import {
-  popupTypeAddCard,
-  popupProfile,
   profileImage,
-  popupTypeAvatar,
   apiConfig
 } from "./constants.js";
 import Api from "./api.js";
-import { renderLoading, openPopup, closePopup } from "./utils.js";
+import { renderLoading} from "./utils.js";
 
 const api = new Api(apiConfig);
 
@@ -57,7 +54,7 @@ function submitFormProfile(evt) {
   .then(() => {
     profileName.textContent = nameInput.value;
     profileDescription.textContent = jobInput.value;
-    closePopup(popupProfile);
+    closePopup(popupTypeProfile);
   })
     .catch((err) => console.log(err))
     .finally(() => {
@@ -65,9 +62,6 @@ function submitFormProfile(evt) {
     });
 }
 export {
-  closePopup,
-  openPopup,
-  popupTypeAddCard,
   profileForm,
   submitFormProfile,
   setProfileValues,

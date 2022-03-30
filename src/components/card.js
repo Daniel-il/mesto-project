@@ -1,7 +1,7 @@
-import { cardForm, popupTypeAddCard } from "./modals";
-import { popupTypeImage, addCardSubmitButton, apiConfig} from "./constants.js";
+import { cardForm } from "./modals";
+import { addCardSubmitButton, apiConfig} from "./constants.js";
 import Api from "./api.js";
-import { renderLoading, closePopup } from "./utils.js";
+import { renderLoading } from "./utils.js";
 
 const api = new Api(apiConfig);
 const popupImage = document.querySelector(".popup__image");
@@ -9,7 +9,7 @@ const placeNameInput = document.querySelector(".form__item_el_card-name");
 const placeLinkInput = document.querySelector(".form__item_el_link");
 const popupImageDescription = document.querySelector(".popup__image-description");
 export default class Card {
-  constructor({link, name, _id, likes, owner}, user, selector) {
+  constructor({link, name, _id, likes, owner}, user, selector, handleCardClick) {
     this._link = link;
     this._name = name;
     this._id = _id;
@@ -17,6 +17,7 @@ export default class Card {
     this._user = user;
     this._selector = selector;
     this._owner = owner;
+    this._handleCardClick = handleCardClick;
   }
   _getElement() {
     const cardElement = document
@@ -36,7 +37,6 @@ export default class Card {
     this._generateBin()
 
     return this._element
-
   }
   _deleteCard() {
     api
@@ -69,7 +69,7 @@ export default class Card {
         })
         .catch((err) => console.log(err));
     }
-    
+
   }
   _getLikesCount(){
     const cardLikeCount = this._element.querySelector(".card__likes-count");
@@ -82,6 +82,8 @@ export default class Card {
   _setEventListeners() {
     const likeElement = this._element.querySelector('.card__like-button');
     const deleteElement = this._element.querySelector('.card__delete-button')
+    const imageElement = this._element.querySelector(".card__image");
+    imageElement.addEventListener("click", this._handleCardClick);
     likeElement.addEventListener('click', () => {
       this._likeCard()
     })
