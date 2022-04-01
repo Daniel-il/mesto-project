@@ -11,7 +11,9 @@ import {
   cardsListSelector,
   cardSelector,
   validationSettings,
-  popupTypeImageSelector
+  popupTypeImageSelector,
+  popupImage,
+  popupImageDescription
 } from "./constants";
 import { submitFormAddCard } from "./card";
 import {
@@ -29,12 +31,13 @@ import Card from "./card";
 import Section from "./section";
 import FormValidator from "./validate";
 import Popup from "./Popup";
+import PopupWithImage from "./popupWithImage";
 
 const api = new Api(apiConfig);
 const popupTypeAddCard = new Popup(popupTypeAddCardSelector);
 const popupTypeProfile = new Popup(popupTypeProfileSelector);
 const popupTypeAvatar = new Popup(popupTypeAvatarSelector);
-const popupTypeImage= new Popup(popupTypeImageSelector);
+const popupTypeImage= new PopupWithImage(popupTypeImageSelector, popupImage, popupImageDescription);
 
 let userId;
 avatarForm.addEventListener("submit", submitAvatarLink);
@@ -59,9 +62,40 @@ Promise.all([api.getUserData(), api.getCards()])
     profileImage.src = userData.avatar;
     userId = userData._id;
     const cardsList = new Section({items: api.getCards(), renderer: (item) => {
-      const card = new Card({name: item.name, link: item.link, _id : item._id, likes: item.likes, owner: item.owner._id}, userId, cardSelector, () => {
-        popupTypeImage.open();
-      });
+      const card = new Card({name: item.name, link: item.link, _id : item._id, likes: item.likes, owner: item.owner._id, user: userId,
+      handleCardClick: () => {
+        popupTypeImage.open(item.link, item.name);
+      },
+      handleDeleteClick: () => {
+        api.deleteCardFromServer(item._id)
+        .then(() => {
+          card.deleteCard()
+        })
+        .catch((err) => {
+          console.log(err)
+        })},
+      handleLikeClick: () => {
+        if (card.isLiked) {
+        api.deleteLike(card._id).
+        then((el) => {
+          card.likeCard()
+          card.updateLikesCount(el);
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      } else {
+        api.putLike(card._id)
+        .then((el) => {
+          card.likeCard();
+          card.updateLikesCount(el);
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }
+      }
+    }, cardSelector);
       const cardElement = card.generate();
       cardsList.addItem(cardElement)
     }}, cardsListSelector)
