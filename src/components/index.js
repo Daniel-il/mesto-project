@@ -13,7 +13,9 @@ import {
   validationSettings,
   popupTypeImageSelector,
   popupImage,
-  popupImageDescription
+  popupImageDescription,
+  profileNameSelector,
+  profileDescriptionSelector
 } from "./constants";
 import { submitFormAddCard } from "./card";
 import {
@@ -22,8 +24,6 @@ import {
   setProfileValues,
   submitAvatarLink,
   avatarForm,
-  profileDescription,
-  profileName,
   cardForm,
 } from "./modals";
 import Api from "./api";
@@ -32,6 +32,7 @@ import Section from "./section";
 import FormValidator from "./validate";
 import Popup from "./Popup";
 import PopupWithImage from "./popupWithImage";
+import UserInfo from "./userInfo";
 
 const api = new Api(apiConfig);
 const popupTypeAddCard = new Popup(popupTypeAddCardSelector);
@@ -55,10 +56,10 @@ formList.forEach((formElement) => {
   const formValidator = new FormValidator(validationSettings, formElement);
   formValidator.enableValidation();
 });
-
+const userInfo = new UserInfo({usernameSelector: profileNameSelector, userAboutSelector: profileDescriptionSelector})
 Promise.all([api.getUserData(), api.getCards()])
   .then(([userData, cards]) => {
-    (profileName.textContent = userData.name), (profileDescription.textContent = userData.about);
+    userInfo.getUserInfo(userData)
     profileImage.src = userData.avatar;
     userId = userData._id;
     const cardsList = new Section({items: api.getCards(), renderer: (item) => {

@@ -15,6 +15,8 @@ const cardsListSelector = document.querySelector(".cards__list");
 const cardSelector = '#card-adding';
 const popupImage = document.querySelector(".popup__image");
 const popupImageDescription = document.querySelector(".popup__image-description");
+const profileNameSelector = ".profile__name"
+const profileDescriptionSelector = ".profile__description";
 export {
   popupTypeAddCardSelector,
   popupTypeImageSelector,
@@ -30,7 +32,9 @@ export {
   likeButton,
   cardsListSelector,
   popupImage,
-  popupImageDescription
+  popupImageDescription,
+  profileNameSelector,
+  profileDescriptionSelector
 };
 
 export const apiConfig = {
