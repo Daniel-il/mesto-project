@@ -77,18 +77,4 @@ export default class Card {
   }
 }
 
-export function submitFormAddCard(event) {
-  renderLoading(true, cardForm, "Создание...");
-  event.preventDefault();
-  api
-    .sendCard(placeNameInput.value, placeLinkInput.value)
-    .then((res) => {
-      cardsList.prepend(addCard(res, res.owner._id));
-      closePopup(popupTypeAddCard);
-      addCardSubmitButton.classList.add("form__submit-button_inactive");
-      addCardSubmitButton.disabled = true;
-      event.target.reset();
-    })
-    .catch((err) => console.log(err))
-    .finally(() => renderLoading(false, cardForm, "Создать"));
-}
+
