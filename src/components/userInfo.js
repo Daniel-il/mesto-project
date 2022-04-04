@@ -9,7 +9,7 @@ export default class UserInfo {
       about: this.userAbout.textContent,
     };
   }
-  setUserInfo(name, about) {
+  setUserInfo({name, about}) {
     this.username.textContent = name;
     this.userAbout.textContent = about;
   }
