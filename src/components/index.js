@@ -24,10 +24,9 @@ import Section from "./section";
 import FormValidator from "./validate";
 import PopupWithImage from "./popupWithImage";
 import UserInfo from "./userInfo";
-
-const popupTypeImage= new PopupWithImage(popupTypeImageSelector, popupImage, popupImageDescription);
 import PopupWithForm from "./PopupWithForm";
-
+const popupTypeImage= new PopupWithImage(popupTypeImageSelector, popupImage, popupImageDescription);
+popupTypeImage.setEventListener();
 const api = new Api(apiConfig);
 
 const popupTypeProfile = new PopupWithForm(
@@ -96,7 +95,7 @@ formList.forEach((formElement) => {
 const userInfo = new UserInfo({usernameSelector: profileNameSelector, userAboutSelector: profileDescriptionSelector})
 Promise.all([api.getUserData(), api.getCards()])
   .then(([userData, cards]) => {
-    userInfo.getUserInfo(userData)
+    userInfo.setUserInfo(userData)
     profileImage.src = userData.avatar;
     userId = userData._id;
     const cardsList = new Section(
