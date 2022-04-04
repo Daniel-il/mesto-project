@@ -6,15 +6,13 @@ import Api from "./api.js";
 import { renderLoading} from "./utils.js";
 
 const api = new Api(apiConfig);
-
-const profile = document.querySelector(".profile__column");
 const inputContainer = document.querySelector(".form__input-container");
-export const profileName = profile.querySelector(".profile__name");
-export const profileDescription = profile.querySelector(
-  ".profile__description"
-);
 const avatarInput = document.querySelector(".form__item_el_avatar");
 export const nameInput = inputContainer.querySelector(".form__item_el_name");
+export const profileName = document.querySelector(".profile__name");
+export const profileDescription = document.querySelector(
+  ".profile__description"
+);
 export const jobInput = inputContainer.querySelector(
   ".form__item_el_description"
 );
