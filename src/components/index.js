@@ -28,7 +28,7 @@ import PopupWithForm from "./PopupWithForm";
 const popupTypeImage= new PopupWithImage(popupTypeImageSelector, popupImage, popupImageDescription);
 popupTypeImage.setEventListener();
 const api = new Api(apiConfig);
-
+const userInfo = new UserInfo({usernameSelector: profileNameSelector, userAboutSelector: profileDescriptionSelector})
 const popupTypeProfile = new PopupWithForm(
   popupTypeProfileSelector,
   {
@@ -43,8 +43,7 @@ const popupTypeProfile = new PopupWithForm(
         about: inputValues["form-description"],
       })
       .then(() => {
-        profileName.textContent = inputValues["form-name"];
-        profileDescription.textContent = inputValues["form-description"];
+        userInfo.setUserInfo({name: inputValues["form-name"], about: inputValues["form-description"]})
         popupTypeProfile.close();
       })
       .catch((err) => console.log(err))
@@ -82,8 +81,8 @@ popupTypeAvatar.setEventListener();
 let userId;
 editButton.addEventListener("click", () => {
   popupTypeProfile.open();
-  popupTypeProfile.setInputValue({ name: "form-name", value: profileName.textContent });
-  popupTypeProfile.setInputValue({ name: "form-description", value: profileDescription.textContent });
+  popupTypeProfile.setInputValue({ name: "form-name", value: userInfo.getUserInfo().name});
+  popupTypeProfile.setInputValue({ name: "form-description", value: userInfo.getUserInfo().about});
 });
 changeButton.addEventListener("click", () => popupTypeAvatar.open());
 
@@ -92,7 +91,7 @@ formList.forEach((formElement) => {
   const formValidator = new FormValidator(validationSettings, formElement);
   formValidator.enableValidation();
 });
-const userInfo = new UserInfo({usernameSelector: profileNameSelector, userAboutSelector: profileDescriptionSelector})
+
 Promise.all([api.getUserData(), api.getCards()])
   .then(([userData, cards]) => {
     userInfo.setUserInfo(userData)
