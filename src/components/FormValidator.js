@@ -1,10 +1,9 @@
 export default class FormValidator {
-  constructor({ fieldset, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass }, form) {
+  constructor({ fieldset, inputSelector, submitButtonSelector, inactiveButtonClass, errorClass }, form) {
     this._fieldset = fieldset;
     this._inputSelector = inputSelector;
     this._submitButtonSelector = submitButtonSelector;
     this._inactiveButtonClass = inactiveButtonClass;
-    this._inputErrorClass = inputErrorClass;
     this._errorClass = errorClass;
     this._form = form;
   }
