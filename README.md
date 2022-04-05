@@ -7,3 +7,7 @@ html, css, js
 
 #### Ссылка на проект:
 https://daniel-il.github.io/mesto-project/
+
+## Почта и Гитхаб второго участника репозитория: 
+SandraSurgut@yandex.ru,
+https://github.com/KlochkovaAT
