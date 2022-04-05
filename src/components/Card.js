@@ -1,19 +1,12 @@
-import { cardForm } from "./modals";
-import { addCardSubmitButton, apiConfig } from "./constants.js";
-import Api from "./api.js";
-import { renderLoading } from "./utils.js";
-const api = new Api(apiConfig);
-const placeNameInput = document.querySelector(".form__item_el_card-name");
-const placeLinkInput = document.querySelector(".form__item_el_link");
 export default class Card {
-  constructor({ link, name, _id, likes, owner, user, handleCardClick, handleDeleteClick, handleLikeClick}, selector) {
+  constructor({ link, name, _id, likes, owner }, userId, { handleCardClick, handleDeleteClick, handleLikeClick }, selector) {
     this._link = link;
     this._name = name;
     this._id = _id;
     this._likes = likes;
-    this._user = user;
+    this._user = userId;
     this._selector = selector;
-    this._owner = owner;
+    this._owner = owner._id;
     this.isLiked = false;
     this._handleCardClick = handleCardClick;
     this._handleDeleteClick = handleDeleteClick;
@@ -42,7 +35,7 @@ export default class Card {
   likeCard() {
     const likeElement = this._element.querySelector(".card__like-button");
     this.isLiked = !this.isLiked;
-    likeElement.classList.toggle('card__like-button_active');
+    likeElement.classList.toggle("card__like-button_active");
   }
   _getLikesCount() {
     const cardLikeCount = this._element.querySelector(".card__likes-count");
@@ -50,15 +43,14 @@ export default class Card {
   }
   updateLikesCount(el) {
     const cardLikeCount = this._element.querySelector(".card__likes-count");
-    const likes = el.likes
+    const likes = el.likes;
     cardLikeCount.textContent = likes.length;
-
   }
   _checkMyUserLike() {
     if (this._likes.some((myUser) => myUser._id === this._user)) {
       const likeButton = this._element.querySelector(".card__like-button");
       likeButton.classList.add("card__like-button_active");
-      this.isLiked = !this.isLiked
+      this.isLiked = !this.isLiked;
     }
   }
   _setEventListeners() {
@@ -76,5 +68,3 @@ export default class Card {
     }
   }
 }
-
-

@@ -15,20 +15,19 @@ import {
   popupImage,
   popupImageDescription,
   profileNameSelector,
-  profileDescriptionSelector
+  profileDescriptionSelector,
 } from "./constants";
-import { profileDescription, profileName } from "./modals";
-import Api from "./api";
-import Card from "./card";
-import Section from "./section";
-import FormValidator from "./validate";
-import PopupWithImage from "./popupWithImage";
-import UserInfo from "./userInfo";
+import Api from "./Api";
+import Card from "./Card";
+import Section from "./Section";
+import FormValidator from "./FormValidator";
+import PopupWithImage from "./PopupWithImage";
+import UserInfo from "./UserInfo";
 import PopupWithForm from "./PopupWithForm";
-const popupTypeImage= new PopupWithImage(popupTypeImageSelector, popupImage, popupImageDescription);
+const popupTypeImage = new PopupWithImage(popupTypeImageSelector, popupImage, popupImageDescription);
 popupTypeImage.setEventListener();
 const api = new Api(apiConfig);
-const userInfo = new UserInfo({usernameSelector: profileNameSelector, userAboutSelector: profileDescriptionSelector})
+const userInfo = new UserInfo({ usernameSelector: profileNameSelector, userAboutSelector: profileDescriptionSelector });
 const popupTypeProfile = new PopupWithForm(
   popupTypeProfileSelector,
   {
@@ -43,7 +42,7 @@ const popupTypeProfile = new PopupWithForm(
         about: inputValues["form-description"],
       })
       .then(() => {
-        userInfo.setUserInfo({name: inputValues["form-name"], about: inputValues["form-description"]})
+        userInfo.setUserInfo({ name: inputValues["form-name"], about: inputValues["form-description"] });
         popupTypeProfile.close();
       })
       .catch((err) => console.log(err))
@@ -81,8 +80,8 @@ popupTypeAvatar.setEventListener();
 let userId;
 editButton.addEventListener("click", () => {
   popupTypeProfile.open();
-  popupTypeProfile.setInputValue({ name: "form-name", value: userInfo.getUserInfo().name});
-  popupTypeProfile.setInputValue({ name: "form-description", value: userInfo.getUserInfo().about});
+  popupTypeProfile.setInputValue({ name: "form-name", value: userInfo.getUserInfo().name });
+  popupTypeProfile.setInputValue({ name: "form-description", value: userInfo.getUserInfo().about });
 });
 changeButton.addEventListener("click", () => popupTypeAvatar.open());
 
@@ -94,55 +93,62 @@ formList.forEach((formElement) => {
 
 Promise.all([api.getUserData(), api.getCards()])
   .then(([userData, cards]) => {
-    userInfo.setUserInfo(userData)
+    userInfo.setUserInfo(userData);
     profileImage.src = userData.avatar;
     userId = userData._id;
     const cardsList = new Section(
       {
         items: cards,
         renderer: (item) => {
-          const card = new Card({name: item.name, link: item.link, _id : item._id, likes: item.likes, owner: item.owner._id, user: userId,
-            handleCardClick: () => {
-              popupTypeImage.open(item.link, item.name);
+          const card = new Card(
+            item,
+            userId,
+            {
+              handleCardClick: () => {
+                popupTypeImage.open(item.link, item.name);
+              },
+              handleDeleteClick: () => {
+                api
+                  .deleteCardFromServer(item._id)
+                  .then(() => {
+                    card.deleteCard();
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              },
+              handleLikeClick: () => {
+                if (card.isLiked) {
+                  api
+                    .deleteLike(card._id)
+                    .then((el) => {
+                      card.likeCard();
+                      card.updateLikesCount(el);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                } else {
+                  api
+                    .putLike(card._id)
+                    .then((el) => {
+                      card.likeCard();
+                      card.updateLikesCount(el);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }
+              },
             },
-            handleDeleteClick: () => {
-              api.deleteCardFromServer(item._id)
-              .then(() => {
-                card.deleteCard()
-              })
-              .catch((err) => {
-                console.log(err)
-              })},
-            handleLikeClick: () => {
-              if (card.isLiked) {
-              api.deleteLike(card._id).
-              then((el) => {
-                card.likeCard()
-                card.updateLikesCount(el);
-              })
-              .catch((err) => {
-                console.log(err)
-              })
-            } else {
-              api.putLike(card._id)
-              .then((el) => {
-                card.likeCard();
-                card.updateLikesCount(el);
-              })
-              .catch((err) => {
-                console.log(err)
-              })
-            }
-            }
-          },
             cardSelector
           );
           const cardElement = card.generate();
           return cardElement;
-        
-      }},
+        },
+      },
       cardsListSelector
-      );
+    );
     cardsList.renderItems(cards);
     const popupTypeAddCard = new PopupWithForm(
       popupTypeAddCardSelector,
