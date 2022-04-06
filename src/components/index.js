@@ -6,9 +6,8 @@ import {
   editButton,
   changeButton,
   popupTypeAvatarSelector,
-  profileImage,
   apiConfig,
-  cardsListSelector,
+  cardsContainer,
   cardSelector,
   validationSettings,
   popupTypeImageSelector,
@@ -16,6 +15,7 @@ import {
   popupImageDescription,
   profileNameSelector,
   profileDescriptionSelector,
+  avatarSelector,
 } from "./constants";
 import Api from "./Api";
 import Card from "./Card";
@@ -27,7 +27,21 @@ import PopupWithForm from "./PopupWithForm";
 const popupTypeImage = new PopupWithImage(popupTypeImageSelector, popupImage, popupImageDescription);
 popupTypeImage.setEventListener();
 const api = new Api(apiConfig);
-const userInfo = new UserInfo({ usernameSelector: profileNameSelector, userAboutSelector: profileDescriptionSelector });
+const userInfo = new UserInfo({
+  usernameSelector: profileNameSelector,
+  userAboutSelector: profileDescriptionSelector,
+  avatarSelector: avatarSelector,
+});
+
+const formList = Array.from(document.querySelectorAll(".form"));
+const formValidators = {};
+formList.forEach((formElement) => {
+  const formValidator = new FormValidator(validationSettings, formElement);
+  const formName = formElement.getAttribute('name');
+  formValidators[formName] = formValidator;
+  formValidator.enableValidation();
+});
+
 const popupTypeProfile = new PopupWithForm(
   popupTypeProfileSelector,
   {
@@ -35,20 +49,15 @@ const popupTypeProfile = new PopupWithForm(
     isLoadedText: "Сохранить",
   },
   (inputValues) => {
-    popupTypeProfile.renderLoading(true);
-    api
+    return api
       .changeUserData({
         name: inputValues["form-name"],
         about: inputValues["form-description"],
       })
       .then(() => {
         userInfo.setUserInfo({ name: inputValues["form-name"], about: inputValues["form-description"] });
-        popupTypeProfile.close();
       })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        popupTypeProfile.renderLoading(false);
-      });
+      .catch((err) => console.log(err));
   }
 );
 popupTypeProfile.setEventListener();
@@ -60,41 +69,35 @@ const popupTypeAvatar = new PopupWithForm(
     isLoadedText: "Обновить",
   },
   (inputValues) => {
-    popupTypeAvatar.renderLoading(true);
-    api
+    return api
       .changeAvatar({
         link: inputValues["form-avatar"],
       })
       .then(() => {
-        profileImage.src = inputValues["form-avatar"];
-        popupTypeAvatar.close();
+        userInfo.setUserInfo({ avatar: inputValues["form-avatar"] });
       })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        popupTypeAvatar.renderLoading(false);
-      });
+      .catch((err) => console.log(err));
   }
 );
 popupTypeAvatar.setEventListener();
 
 let userId;
 editButton.addEventListener("click", () => {
+  formValidators[popupTypeProfile.formName].resetValidation();
   popupTypeProfile.open();
-  popupTypeProfile.setInputValue({ name: "form-name", value: userInfo.getUserInfo().name });
-  popupTypeProfile.setInputValue({ name: "form-description", value: userInfo.getUserInfo().about });
+  const {name, about} = userInfo.getUserInfo();
+  popupTypeProfile.setInputValue({ name: "form-name", value: name });
+  popupTypeProfile.setInputValue({ name: "form-description", value: about });
 });
-changeButton.addEventListener("click", () => popupTypeAvatar.open());
+changeButton.addEventListener("click", () => {
+  formValidators[popupTypeAvatar.formName].resetValidation();
+  popupTypeAvatar.open()
+});
 
-const formList = Array.from(document.querySelectorAll(".form"));
-formList.forEach((formElement) => {
-  const formValidator = new FormValidator(validationSettings, formElement);
-  formValidator.enableValidation();
-});
 
 Promise.all([api.getUserData(), api.getCards()])
   .then(([userData, cards]) => {
     userInfo.setUserInfo(userData);
-    profileImage.src = userData.avatar;
     userId = userData._id;
     const cardsList = new Section(
       {
@@ -147,7 +150,7 @@ Promise.all([api.getUserData(), api.getCards()])
           return cardElement;
         },
       },
-      cardsListSelector
+      cardsContainer
     );
     cardsList.renderItems(cards);
     const popupTypeAddCard = new PopupWithForm(
@@ -157,18 +160,18 @@ Promise.all([api.getUserData(), api.getCards()])
         isLoadedText: "Создать",
       },
       (inputValues) => {
-        popupTypeAddCard.renderLoading(true);
-        api
+        return api
           .sendCard(inputValues["form-name"], inputValues["form-description"])
           .then((res) => {
             cardsList.addItem(res);
-            popupTypeAddCard.close();
           })
-          .catch((err) => console.log(err))
-          .finally(() => popupTypeAddCard.renderLoading(false));
+          .catch((err) => console.log(err));
       }
     );
     popupTypeAddCard.setEventListener();
-    addButton.addEventListener("click", () => popupTypeAddCard.open());
+    addButton.addEventListener("click", () => {
+      formValidators[popupTypeAddCard.formName].resetValidation();
+      popupTypeAddCard.open()
+    });
   })
   .catch((err) => console.log(err));
