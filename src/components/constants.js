@@ -5,28 +5,28 @@ const addButton = document.querySelector(".profile__add-button");
 const editButton = document.querySelector(".profile__edit-button");
 const changeButton = document.querySelector(".profile__avatar-overlay");
 const popupTypeAvatarSelector = ".popup_type_avatar";
-const profileImage = document.querySelector(".profile__avatar");
-const cardsListSelector = document.querySelector(".cards__list");
+const cardsContainer = document.querySelector(".cards__list");
 const cardSelector = '#card-adding';
 const popupImage = document.querySelector(".popup__image");
 const popupImageDescription = document.querySelector(".popup__image-description");
 const profileNameSelector = ".profile__name"
 const profileDescriptionSelector = ".profile__description";
+const avatarSelector = ".profile__avatar";
 export {
   popupTypeAddCardSelector,
   popupTypeImageSelector,
   popupTypeProfileSelector,
   addButton,
   editButton,
-  profileImage,
   changeButton,
   popupTypeAvatarSelector,
   cardSelector,
-  cardsListSelector,
+  cardsContainer,
   popupImage,
   popupImageDescription,
   profileNameSelector,
-  profileDescriptionSelector
+  profileDescriptionSelector,
+  avatarSelector
 };
 
 export const apiConfig = {

@@ -6,9 +6,8 @@ import {
   editButton,
   changeButton,
   popupTypeAvatarSelector,
-  profileImage,
   apiConfig,
-  cardsListSelector,
+  cardsContainer,
   cardSelector,
   validationSettings,
   popupTypeImageSelector,
@@ -16,6 +15,7 @@ import {
   popupImageDescription,
   profileNameSelector,
   profileDescriptionSelector,
+  avatarSelector
 } from "./constants";
 import Api from "./Api";
 import Card from "./Card";
@@ -27,7 +27,7 @@ import PopupWithForm from "./PopupWithForm";
 const popupTypeImage = new PopupWithImage(popupTypeImageSelector, popupImage, popupImageDescription);
 popupTypeImage.setEventListener();
 const api = new Api(apiConfig);
-const userInfo = new UserInfo({ usernameSelector: profileNameSelector, userAboutSelector: profileDescriptionSelector });
+const userInfo = new UserInfo({ usernameSelector: profileNameSelector, userAboutSelector: profileDescriptionSelector, avatarSelector: avatarSelector });
 const popupTypeProfile = new PopupWithForm(
   popupTypeProfileSelector,
   {
@@ -66,8 +66,8 @@ const popupTypeAvatar = new PopupWithForm(
         link: inputValues["form-avatar"],
       })
       .then(() => {
-        profileImage.src = inputValues["form-avatar"];
-        popupTypeAvatar.close();
+       userInfo.setUserInfo({avatar: inputValues["form-avatar"] }) 
+       popupTypeAvatar.close();
       })
       .catch((err) => console.log(err))
       .finally(() => {
@@ -94,7 +94,6 @@ formList.forEach((formElement) => {
 Promise.all([api.getUserData(), api.getCards()])
   .then(([userData, cards]) => {
     userInfo.setUserInfo(userData);
-    profileImage.src = userData.avatar;
     userId = userData._id;
     const cardsList = new Section(
       {
@@ -147,7 +146,7 @@ Promise.all([api.getUserData(), api.getCards()])
           return cardElement;
         },
       },
-      cardsListSelector
+      cardsContainer
     );
     cardsList.renderItems(cards);
     const popupTypeAddCard = new PopupWithForm(
