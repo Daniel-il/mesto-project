@@ -38,7 +38,6 @@ export const apiConfig = {
 };
 
 export const validationSettings = {
-  fieldset: '.form__input-container',
   inputSelector: '.form__item',
   submitButtonSelector: '.form__submit-button',
   inactiveButtonClass: 'form__submit-button_inactive',
