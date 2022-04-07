@@ -24,10 +24,11 @@ import FormValidator from "./FormValidator";
 import PopupWithImage from "./PopupWithImage";
 import UserInfo from "./UserInfo";
 import PopupWithForm from "./PopupWithForm";
+let userId
 const popupTypeImage = new PopupWithImage(popupTypeImageSelector, popupImage, popupImageDescription);
 popupTypeImage.setEventListener();
 const api = new Api(apiConfig);
-const userInfo = new UserInfo({ usernameSelector: profileNameSelector, userAboutSelector: profileDescriptionSelector, avatarSelector: avatarSelector });
+const userInfo = new UserInfo({ usernameSelector: profileNameSelector, userAboutSelector: profileDescriptionSelector, avatarSelector: avatarSelector, _id: userId });
 const popupTypeProfile = new PopupWithForm(
   popupTypeProfileSelector,
   {
@@ -41,8 +42,8 @@ const popupTypeProfile = new PopupWithForm(
         name: inputValues["form-name"],
         about: inputValues["form-description"],
       })
-      .then(() => {
-        userInfo.setUserInfo({ name: inputValues["form-name"], about: inputValues["form-description"] });
+      .then((res) => {
+        userInfo.setUserInfo(res);
         popupTypeProfile.close();
       })
       .catch((err) => console.log(err))
@@ -65,8 +66,8 @@ const popupTypeAvatar = new PopupWithForm(
       .changeAvatar({
         link: inputValues["form-avatar"],
       })
-      .then(() => {
-       userInfo.setUserInfo({avatar: inputValues["form-avatar"] }) 
+      .then((res) => {
+       userInfo.setUserInfo(res);
        popupTypeAvatar.close();
       })
       .catch((err) => console.log(err))
@@ -76,12 +77,11 @@ const popupTypeAvatar = new PopupWithForm(
   }
 );
 popupTypeAvatar.setEventListener();
-
-let userId;
 editButton.addEventListener("click", () => {
   popupTypeProfile.open();
-  popupTypeProfile.setInputValue({ name: "form-name", value: userInfo.getUserInfo().name });
-  popupTypeProfile.setInputValue({ name: "form-description", value: userInfo.getUserInfo().about });
+  const {name, about} = userInfo.getUserInfo()
+  popupTypeProfile.setInputValue({ name: "form-name", value: name });
+  popupTypeProfile.setInputValue({ name: "form-description", value: about });
 });
 changeButton.addEventListener("click", () => popupTypeAvatar.open());
 
@@ -94,6 +94,7 @@ formList.forEach((formElement) => {
 Promise.all([api.getUserData(), api.getCards()])
   .then(([userData, cards]) => {
     userInfo.setUserInfo(userData);
+    console.log(userInfo.getUserInfo)
     userId = userData._id;
     const cardsList = new Section(
       {
