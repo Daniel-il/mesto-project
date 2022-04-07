@@ -24,6 +24,7 @@ import FormValidator from "./FormValidator";
 import PopupWithImage from "./PopupWithImage";
 import UserInfo from "./UserInfo";
 import PopupWithForm from "./PopupWithForm";
+let userId
 const popupTypeImage = new PopupWithImage(popupTypeImageSelector, popupImage, popupImageDescription);
 popupTypeImage.setEventListener();
 const api = new Api(apiConfig);
@@ -31,6 +32,7 @@ const userInfo = new UserInfo({
   usernameSelector: profileNameSelector,
   userAboutSelector: profileDescriptionSelector,
   avatarSelector: avatarSelector,
+  _id: userId,
 });
 
 const formList = Array.from(document.querySelectorAll(".form"));
@@ -54,8 +56,8 @@ const popupTypeProfile = new PopupWithForm(
         name: inputValues["form-name"],
         about: inputValues["form-description"],
       })
-      .then(() => {
-        userInfo.setUserInfo({ name: inputValues["form-name"], about: inputValues["form-description"] });
+      .then((res) => {
+        userInfo.setUserInfo(res);
       })
       .catch((err) => console.log(err));
   }
@@ -73,15 +75,13 @@ const popupTypeAvatar = new PopupWithForm(
       .changeAvatar({
         link: inputValues["form-avatar"],
       })
-      .then(() => {
-        userInfo.setUserInfo({ avatar: inputValues["form-avatar"] });
+      .then((res) => {
+       userInfo.setUserInfo(res);
       })
       .catch((err) => console.log(err));
   }
 );
 popupTypeAvatar.setEventListener();
-
-let userId;
 editButton.addEventListener("click", () => {
   formValidators[popupTypeProfile.formName].resetValidation();
   popupTypeProfile.open();
