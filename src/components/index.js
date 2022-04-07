@@ -94,7 +94,6 @@ formList.forEach((formElement) => {
 Promise.all([api.getUserData(), api.getCards()])
   .then(([userData, cards]) => {
     userInfo.setUserInfo(userData);
-    console.log(userInfo.getUserInfo)
     userId = userData._id;
     const cardsList = new Section(
       {
