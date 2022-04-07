@@ -16,15 +16,14 @@ import {
   profileNameSelector,
   profileDescriptionSelector,
   avatarSelector,
-} from "./constants";
-import Api from "./Api";
-import Card from "./Card";
-import Section from "./Section";
-import FormValidator from "./FormValidator";
-import PopupWithImage from "./PopupWithImage";
-import UserInfo from "./UserInfo";
-import PopupWithForm from "./PopupWithForm";
-let userId
+} from "../utils/constants";
+import Api from "../components/Api";
+import Card from "../components/Card";
+import Section from "../components/Section";
+import FormValidator from "../components/FormValidator";
+import PopupWithImage from "../components/PopupWithImage";
+import UserInfo from "../components/UserInfo";
+import PopupWithForm from "../components/PopupWithForm";
 const popupTypeImage = new PopupWithImage(popupTypeImageSelector, popupImage, popupImageDescription);
 popupTypeImage.setEventListener();
 const api = new Api(apiConfig);
@@ -32,7 +31,6 @@ const userInfo = new UserInfo({
   usernameSelector: profileNameSelector,
   userAboutSelector: profileDescriptionSelector,
   avatarSelector: avatarSelector,
-  _id: userId,
 });
 
 const formList = Array.from(document.querySelectorAll(".form"));
@@ -98,14 +96,13 @@ changeButton.addEventListener("click", () => {
 Promise.all([api.getUserData(), api.getCards()])
   .then(([userData, cards]) => {
     userInfo.setUserInfo(userData);
-    userId = userData._id;
     const cardsList = new Section(
       {
         items: cards,
         renderer: (item) => {
           const card = new Card(
             item,
-            userId,
+            userInfo.getUserId(),
             {
               handleCardClick: () => {
                 popupTypeImage.open(item.link, item.name);
