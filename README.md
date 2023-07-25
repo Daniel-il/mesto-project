@@ -8,5 +8,5 @@ HTML, CSS, JS
 #### Ссылка на проект:
 https://daniel-il.github.io/mesto-project/
 
-## Гитхаб второго участника репозитория: 
+### Гитхаб второго участника репозитория: 
 https://github.com/KlochkovaAT
